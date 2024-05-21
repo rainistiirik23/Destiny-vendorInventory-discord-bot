@@ -28,17 +28,21 @@ client.once(Events.ClientReady, async (readyClient) => {
     const strings = [];
     /*  console.log(response.data); */
     response.data[userKey].forEach((item) => {
-      strings.push(`Item${item.itemName}`);
+      strings.push(`\n${item.itemName}`);
       const perksAsJson = JSON.parse(item.perks);
       const perkColumnKeys = Object.keys(perksAsJson);
       for (let i = 0; i < perkColumnKeys.length; i++) {
-        strings.push(perkColumnKeys[i]);
-        perksAsJson[perkColumnKeys[i]].forEach((perk) => {
-          strings.push(perk.perkName);
+        strings.push(`\nPerk column ${i + 1}`);
+        perksAsJson[perkColumnKeys[i]].forEach((perk, perkIndex) => {
+          if (perkIndex === 0) {
+            strings.push(`\n\t\v${perk.perkName}`);
+            return;
+          }
+          strings.push(`  \v${perk.perkName}`);
         });
       }
     });
-    const channelMessage = `Hello${user.username} following items you have wihlisted are for sale at Banshee`.concat(
+    const channelMessage = `Hello ${user.username}, following items you have wihlisted are for sale at Banshee`.concat(
       ...strings
     );
     channnel.send(channelMessage);
