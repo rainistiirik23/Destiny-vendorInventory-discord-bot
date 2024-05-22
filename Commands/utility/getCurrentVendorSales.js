@@ -3,7 +3,6 @@ async function getAllVendorSales(interaction, commandName) {
   if (commandName === "vendorsales") {
     const request = await axios.get("https://localhost:8000/api/currentVendorSales");
     const message = [];
-    console.log(request.data.c);
     request.data.currentVendorSales.forEach((vendorSale) => {
       message.push(vendorSale.itemName);
       const perksAsJson = JSON.parse(vendorSale.perks);
